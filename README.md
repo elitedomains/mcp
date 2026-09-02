@@ -244,9 +244,13 @@ agent should reach for before `register-domain`.
 
 Two limits apply per account, and REST and MCP share the counters:
 
-- Tools that reach a registry (marked ⚡ above): **100 requests/minute, 1,000/day**;
-  during the DENIC droptime between 02:00 and 04:00 (Europe/Berlin), **10/minute and
-  100 for the whole window**.
+- Tools that reach a registry (marked ⚡ above): **100 requests/minute, 1,000/day**.
+  Between 02:00 and 04:00 (Europe/Berlin), DENIC's droptime, both ceilings drop
+  tenfold, to **10/minute and 100/day** — and the daily one applies to the same
+  counter you have been filling since midnight, it is not a fresh allowance for the
+  window. An account that has already made 100 registry calls before 02:00 has nothing
+  left for the droptime; plan the day around the window rather than the other way
+  round.
 - Everything else: **600 requests/minute, 20,000/day**, not reduced during droptime.
 
 Those are the defaults — talk to us if your workload needs more.
@@ -254,9 +258,14 @@ Those are the defaults — talk to us if your workload needs more.
 ## Sandbox mode
 
 Every tool takes a `sandbox` argument. With `sandbox: 1` the call is authenticated and
-validated as usual and the response says what *would* have happened, but nothing is
-written and nothing is ordered — the safe way to let a new agent loose on a real
-portfolio for the first time.
+validated exactly as usual, but nothing is written, nothing is ordered and nothing is
+charged — the safe way to let a new agent loose on a real portfolio for the first time.
+
+**Judge a dry run by what you sent, not by what came back.** Most tools mark it in
+their answer ("Note would be saved (sandbox mode)"), but not all of them do:
+`register-domain` replies `Domain created` either way. Nothing was created — the
+message is simply the same one a real registration returns, so neither you nor an agent
+can tell the two apart from the response alone.
 
 The tools' input schemas do not list the argument, so a model will not reach for it on
 its own: put it in your client's instructions ("always call the ELITEDOMAINS tools with
