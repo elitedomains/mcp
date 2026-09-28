@@ -7,14 +7,14 @@ answer buyers and read the invoices behind it all — from any AI agent that spe
 This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**, and it
 is hosted by us. There is nothing to install, clone or run: point an MCP client at
 `https://mcp.elitedomains.de`, authenticate with a personal access token from your
-ELITEDOMAINS account, and the 38 tools below appear.
+ELITEDOMAINS account, and the 39 tools below appear.
 
 |  |  |
 | --- | --- |
 | **Endpoint** | `https://mcp.elitedomains.de` |
 | **Transport** | Streamable HTTP |
 | **Authentication** | Bearer token — the same personal access token as the REST API |
-| **Tools** | 38 |
+| **Tools** | 39 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
 | **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
@@ -223,6 +223,7 @@ two rate limits (see [Rate limits](#rate-limits)).
 | Tool | What it does | REST | Scope |
 | --- | --- | --- | --- |
 | `list-catcher-orders` | List the backorder (catcher) orders in the authenticated account, with filtering, ordering and pagination. | `GET /catcher` | `catcher:read` |
+| `list-quarantine` | List .de quarantine domains available for backorder, with deadlines (earliest drop days), rating, DNS usage of other TLDs, bidder counts and whether you have added them. | `GET /catcher/quarantine` | `catcher:read` |
 | `list-catcher-filters` | List the tags and TLDs available to filter the backorder (catcher) orders listing by, with counts. | `GET /catcher/filters` | `catcher:read` |
 | `catcher-info` | Get backorder (catcher) information for a specific domain name. | `GET /catcher/info` | `catcher:read` |
 | `create-catcher-order` ⚡ | Place a backorder (catcher) for a .de domain so it is caught when it drops. Only .de domains are supported. | `POST /catcher` | `catcher:write` |
