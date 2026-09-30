@@ -1,31 +1,46 @@
 # ELITEDOMAINS MCP Server
 
-Register and transfer domains, back-order expiring `.de` domains, run sale pages,
+Register and transfer domains, backorder expiring domains, run sale pages,
 answer buyers and read the invoices behind it all — from any AI agent that speaks the
 [Model Context Protocol](https://modelcontextprotocol.io).
 
-This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**, and it
-is hosted by us. There is nothing to install, clone or run: point an MCP client at
-`https://mcp.elitedomains.de`, authenticate with a personal access token from your
-ELITEDOMAINS account, and the 39 tools below appear.
+This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**. There is
+nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.de`,
+authenticate with a personal access token from your ELITEDOMAINS account, and the
+39 tools below appear.
 
 |  |  |
 | --- | --- |
 | **Endpoint** | `https://mcp.elitedomains.de` |
 | **Transport** | Streamable HTTP |
-| **Authentication** | Bearer token — the same personal access token as the REST API |
+| **Authentication** | OAuth 2.1 with Dynamic Client Registration, or a bearer token — the same personal access token as the REST API |
 | **Tools** | 39 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
 | **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
 
+## What we offer
+
+Domain registration and domain portfolio management. Also a domain marketplace, domain
+backordering and domain monitoring. Sell your domains with our beautiful sales pages. In
+addition some nice domain tools, like SEDO synchronization or AuthInfo2 codes for `.de`
+domains.
+
+With our MCP Server you can search and filter your portfolio, check availability and exact
+order costs, register and transfer domains, update owner handles and redirects, and order
+AuthInfo/AuthInfo2 codes. Backorder expiring `.de` domains with the .de Catcher. Create and
+price sales pages, respond to buyer inquiries with counteroffers, sync listings to SEDO, and
+review transactions and invoices. All TLDs are supported; the Catcher, AuthInfo2, and
+transit features are `.de`-only. The connector operates exclusively on your own account
+with the permissions you grant, and paid actions are billed exactly as they are in the web
+app.
+
 ## Who we are
 
-ELITEDOMAINS is an independent, owner-operated German domain provider. Two domainers
-founded it in 2017 and opened it to everyone in 2018, because the control panels they
-had to work with every day were built for people who own one domain, not a few thousand
-— and the motto has not changed since: *von Domainern für Domainer*, by domainers for
-domainers.
+[ELITEDOMAINS](https://elitedomains.de) is an independent, owner-operated German domain
+provider. Two domainers founded it in 2017 and opened it to everyone in 2018, because the
+control panels they had to work with every day were built for people who own one domain,
+not a few thousand — and the motto has not changed since: by domainers for domainers.
 
 We write every line of the platform ourselves and run our own registry connections,
 including a direct one to [DENIC](https://www.denic.de), the registry behind `.de`.
@@ -55,17 +70,21 @@ log in — [see for yourself](https://elitedomains.de/preise).
 - **Catcher** — order, review and cancel backorders for expiring `.de` domains.
 
 All TLDs we offer are supported; the DENIC-specific features (catcher, AuthInfo2,
-transit) are `.de` only. The `domain-prices` tool answers what a TLD costs.
+transit) are `.de` only. The `domain-prices` tool answers what a TLD costs for your
+account, and `check-domain-order` what a specific order would cost. The price of an
+order is charged once; what the domain costs after that is its renewal price, yearly —
+or monthly, if your account has a monthly `.de` runtime.
 
 ## Getting started
 
 **1. An ELITEDOMAINS account.** [Sign up](https://app.elitedomains.de/register) — free,
 and you only pay for what you register.
 
-**2. API access.** It is off until you ask for it: write to
-[support](https://elitedomains.de/kontakt) or use the chat in the app, and we will
-enable it. The [FAQ entry](https://elitedomains.de/faq/wie-funktioniert-api-schnittstelle)
-explains what happens then.
+**2. API access.** Included with every account, there is nothing to request. If the
+server answers that API access has been disabled for your account, write to
+[support](https://elitedomains.de/kontakt) or use the chat in the app. The
+[FAQ entry](https://elitedomains.de/faq/wie-funktioniert-api-schnittstelle) has more on
+the API.
 
 **3. A personal access token.** Create one under
 [Settings → API](https://app.elitedomains.de/settings#api). You choose its scopes when
@@ -151,9 +170,9 @@ two rate limits (see [Rate limits](#rate-limits)).
 | --- | --- | --- | --- |
 | `list-domains` | List the domains in the authenticated account, with filtering, ordering and pagination. | `GET /domains` | `domains:read` |
 | `list-domain-filters` | List the tags and TLDs available to filter the domains listing by, with counts. | `GET /domains/filters` | `domains:read` |
-| `check-domain` ⚡ | Check the registry status of a domain (free, connect, ...). Also returns the order preview fields of check-domain-order (action, periods, price, billing). | `GET /domains/check` | `domains:read` |
-| `check-domain-order` ⚡ | Preview an order for a domain before placing it: registry status, resulting action (register/transfer), available periods with costs and how the order would be billed (instant vs. monthly invoice). | `GET /domains/order/check` | `domains:read` |
-| `domain-prices` | Get domain registration and renewal prices, optionally filtered by a single TLD. | `GET /domains/prices` | `domains:read` |
+| `check-domain` ⚡ | Check the registry status of a domain (free, connect, ...). Also returns the order preview fields of check-domain-order (action, periods, one-time price, renew, billing). | `GET /domains/check` | `domains:read` |
+| `check-domain-order` ⚡ | Preview an order for a domain before placing it: registry status, resulting action (register/transfer), available periods with their one-time cost, the recurring renewal price (renew, yearly or monthly) and how the order would be billed (instant vs. monthly invoice). | `GET /domains/order/check` | `domains:read` |
+| `domain-prices` | Get the prices valid for this account per TLD (registration, transfer, renewal, restore), optionally filtered by a single TLD. Read each price with its interval: registration is a one-time fee, renewal is the recurring yearly or monthly price. | `GET /domains/prices` | `domains:read` |
 | `register-domain` ⚡ | Register a new domain or transfer an existing one into the account. | `POST /domains` | `domains:write` |
 | `update-domain` ⚡ | Update a domain's redirector settings and/or owner handle. | `PATCH /domains` | `domains:write` |
 | `delete-domain` ⚡ | Delete a domain, or put it into the transit state instead of deleting. | `DELETE /domains` | `domains:write` |
@@ -292,8 +311,9 @@ until an agent you configured asks for it. See our
 
 [Home](https://elitedomains.de) ·
 [Prices](https://elitedomains.de/preise) ·
+[Marketplace](https://elitedomains.de/marktplatz) ·
 [Sell domains](https://elitedomains.de/domains-verkaufen) ·
-[.de Catcher](https://elitedomains.de/de-catcher) ·
+[Catcher](https://elitedomains.de/de-catcher) ·
 [AuthInfo2](https://elitedomains.de/auth-info-2-code) ·
 [FAQ](https://elitedomains.de/faq) ·
 [Changelog](https://elitedomains.de/changelog) ·
