@@ -7,14 +7,14 @@ answer buyers and read the invoices behind it all — from any AI agent that spe
 This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**. There is
 nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.de`,
 authenticate with a personal access token from your ELITEDOMAINS account, and the
-39 tools below appear.
+41 tools below appear.
 
 |  |  |
 | --- | --- |
 | **Endpoint** | `https://mcp.elitedomains.de` |
 | **Transport** | Streamable HTTP |
 | **Authentication** | OAuth 2.1 with Dynamic Client Registration, or a bearer token — the same personal access token as the REST API |
-| **Tools** | 39 |
+| **Tools** | 41 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
 | **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
@@ -173,7 +173,9 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `check-domain` ⚡ | Check the registry status of a domain (free, connect, ...). Also returns the order preview fields of check-domain-order (action, periods, one-time price, renew, billing). | `GET /domains/check` | `domains:read` |
 | `check-domain-order` ⚡ | Preview an order for a domain before placing it: registry status, resulting action (register/transfer), available periods with their one-time cost, the recurring renewal price (renew, yearly or monthly) and how the order would be billed (instant vs. monthly invoice). | `GET /domains/order/check` | `domains:read` |
 | `domain-prices` | Get the prices valid for this account per TLD (registration, transfer, renewal, restore) with active promotions, individual prices, scheduled price changes, the renewal runtime and how many domains the account holds per TLD. Filter by TLDs or domain names, and by portfolio, promotion, price_update or custom. Read each price with its interval: registration is a one-time fee, renewal is the recurring yearly or monthly price. | `GET /domains/prices` | `domains:read` |
-| `register-domain` ⚡ | Register a new domain or transfer an existing one into the account. | `POST /domains` | `domains:write` |
+| `register-domain` ⚡ | Register a single domain or transfer one into the account. Each call is charged and invoiced on its own; for several domains use order-domains. | `POST /domains` | `domains:write` |
+| `order-domains` ⚡ | Register and/or transfer up to 250 domains in one order, paid with a single charge and billed on a single invoice. Each domain may carry its own settings. Runs in the background; check progress with get-domain-order. | `POST /domains/orders` | `domains:write` |
+| `get-domain-order` | Get the state of a domain order placed with order-domains: the result of each domain, the payment and the invoice. | `GET /domains/orders/{id}` | `domains:read` |
 | `update-domain` ⚡ | Update a domain's redirector settings and/or owner handle. | `PATCH /domains` | `domains:write` |
 | `delete-domain` ⚡ | Delete a domain, or put it into the transit state instead of deleting. | `DELETE /domains` | `domains:write` |
 | `set-domain-tags` | Assign tags to a domain in the account. | `POST /domains/tags` | `domains:write` |
@@ -259,6 +261,13 @@ rejected when there is no usable payment method.
 `check-domain-order` answers what an order would do, which periods are available, what
 it would cost and how it would be billed — without ordering anything. It is the tool an
 agent should reach for before `register-domain`.
+
+**Several domains belong in one order.** Each `register-domain` call is charged and
+invoiced on its own, so registering 200 domains that way means 200 card charges and 200
+invoices. `order-domains` takes up to 250 registrations and transfers — each with its own
+DNS settings, handle or tags if needed — authorizes the total once, and charges only the
+domains that succeed, on a single invoice. The order runs in the background;
+`get-domain-order` reports how far it got.
 
 ## Rate limits
 
