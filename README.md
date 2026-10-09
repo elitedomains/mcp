@@ -244,7 +244,7 @@ two rate limits (see [Rate limits](#rate-limits)).
 | Tool | What it does | REST | Scope |
 | --- | --- | --- | --- |
 | `list-catcher-orders` | List the backorder (catcher) orders in the authenticated account, with filtering, ordering and pagination. | `GET /catcher` | `catcher:read` |
-| `list-quarantine` | List .de quarantine domains available for backorder, with deadlines (earliest drop days), rating, DNS usage of other TLDs, bidder counts and whether you have added them. | `GET /catcher/quarantine` | `catcher:read` |
+| `list-quarantine` | List .de quarantine domains available for backorder, with deadlines (earliest drop days), rating, DNS usage of other TLDs and whether you have added them. | `GET /catcher/quarantine` | `catcher:read` |
 | `list-catcher-filters` | List the tags and TLDs available to filter the backorder (catcher) orders listing by, with counts. | `GET /catcher/filters` | `catcher:read` |
 | `catcher-info` | Get backorder (catcher) information for a specific domain name. | `GET /catcher/info` | `catcher:read` |
 | `create-catcher-order` ⚡ | Place a backorder (catcher) for a .de domain so it is caught when it drops. Only .de domains are supported. | `POST /catcher` | `catcher:write` |
