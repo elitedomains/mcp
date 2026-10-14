@@ -28,9 +28,9 @@ domains.
 
 With our MCP Server you can search and filter your portfolio, check availability and exact
 order costs, register and transfer domains, update owner handles and redirects, and order
-AuthInfo/AuthInfo2 codes. Backorder expiring `.de` domains with the .de Catcher. Create and
+AuthInfo/AuthInfo2 codes. Backorder expiring `.de` domains with our .de Backorder service. Create and
 price sales pages, respond to buyer inquiries with counteroffers, sync listings to SEDO, and
-review transactions and invoices. All TLDs are supported; the Catcher, AuthInfo2, and
+review transactions and invoices. All TLDs are supported; Backorder, AuthInfo2, and
 transit features are `.de`-only. The connector operates exclusively on your own account
 with the permissions you grant, and paid actions are billed exactly as they are in the web
 app.
@@ -67,9 +67,10 @@ log in — [see for yourself](https://elitedomains.de/preise).
 - **Notes and journal** — the private notes on a domain, and the log of what changed.
 - **Transactions and invoices** — past sales, invoices with their line items, and the
   service records behind a position.
-- **Catcher** — order, review and cancel backorders for expiring `.de` domains.
+- **Backorder** — find `.de` domains about to be deleted in the droplist (RGP and
+  quarantine), then order, review and cancel backorders for them.
 
-All TLDs we offer are supported; the DENIC-specific features (catcher, AuthInfo2,
+All TLDs we offer are supported; the DENIC-specific features (backorder, AuthInfo2,
 transit) are `.de` only. The `domain-prices` tool answers what a TLD costs for your
 account, and `check-domain-order` what a specific order would cost. The price of an
 order is charged once; what the domain costs after that is its renewal price, yearly —
@@ -239,16 +240,16 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `get-invoice` | Get a single invoice including its line items (positions). | `GET /invoices/{id}` | `invoices:read` |
 | `list-invoice-services` | List an invoice's service records (Leistungsabrechnung): one record per billed domain or service. | `GET /invoices/{id}/services` | `invoices:read` |
 
-### Catcher
+### Backorder
 
 | Tool | What it does | REST | Scope |
 | --- | --- | --- | --- |
-| `list-catcher-orders` | List the backorder (catcher) orders in the authenticated account, with filtering, ordering and pagination. | `GET /catcher` | `catcher:read` |
-| `list-quarantine` | List .de quarantine domains available for backorder, with deadlines (earliest drop days), rating, DNS usage of other TLDs and whether you have added them. | `GET /catcher/quarantine` | `catcher:read` |
-| `list-catcher-filters` | List the tags and TLDs available to filter the backorder (catcher) orders listing by, with counts. | `GET /catcher/filters` | `catcher:read` |
-| `catcher-info` | Get backorder (catcher) information for a specific domain name. | `GET /catcher/info` | `catcher:read` |
-| `create-catcher-order` ⚡ | Place a backorder (catcher) for a .de domain so it is caught when it drops. Only .de domains are supported. | `POST /catcher` | `catcher:write` |
-| `delete-catcher-order` | Remove a backorder (catcher) order for a domain. | `DELETE /catcher` | `catcher:write` |
+| `list-catcher-orders` | List the backorder (catcher) orders in the authenticated account, with filtering, ordering and pagination. | `GET /backorder/catcher` | `catcher:read` |
+| `list-droplist` | List .de domains about to be deleted that can be backordered: RGP domains (deleted, in the redemption grace period) and quarantine domains (failed owner verification), with type, estimated drop date and its precision, detected AuthInfo2, rating, DNS usage of other TLDs and whether you have added them. | `GET /backorder/droplist` | `catcher:read` |
+| `list-catcher-filters` | List the tags and TLDs available to filter the backorder (catcher) orders listing by, with counts. | `GET /backorder/catcher/filters` | `catcher:read` |
+| `catcher-info` | Get backorder (catcher) information for a specific domain name. | `GET /backorder/catcher/info` | `catcher:read` |
+| `create-catcher-order` ⚡ | Place a backorder (catcher) for a .de domain so it is caught when it drops. Only .de domains are supported. | `POST /backorder/catcher` | `catcher:write` |
+| `delete-catcher-order` | Remove a backorder (catcher) order for a domain. | `DELETE /backorder/catcher` | `catcher:write` |
 
 ## Paid actions
 
@@ -322,7 +323,7 @@ until an agent you configured asks for it. See our
 [Prices](https://elitedomains.de/preise) ·
 [Marketplace](https://elitedomains.de/marktplatz) ·
 [Sell domains](https://elitedomains.de/domains-verkaufen) ·
-[Catcher](https://elitedomains.de/de-catcher) ·
+[Backorder](https://elitedomains.de/de-catcher) ·
 [AuthInfo2](https://elitedomains.de/auth-info-2-code) ·
 [FAQ](https://elitedomains.de/faq) ·
 [Changelog](https://elitedomains.de/changelog) ·
