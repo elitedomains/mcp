@@ -7,14 +7,14 @@ answer buyers and read the invoices behind it all — from any AI agent that spe
 This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**. There is
 nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.de`,
 authenticate with a personal access token from your ELITEDOMAINS account, and the
-41 tools below appear.
+43 tools below appear.
 
 |  |  |
 | --- | --- |
 | **Endpoint** | `https://mcp.elitedomains.de` |
 | **Transport** | Streamable HTTP |
 | **Authentication** | OAuth 2.1 with Dynamic Client Registration, or a bearer token — the same personal access token as the REST API |
-| **Tools** | 41 |
+| **Tools** | 43 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
 | **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
@@ -203,6 +203,8 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `update-offer` | Update the configuration of a sale page (domain offer) in the account, e.g. template, price, status, or content. | `PATCH /offers` | `offers:write` |
 | `update-offer-price` | Update the asking price of a sale page (domain offer) in the account. | `PATCH /offers/price` | `offers:write` |
 | `delete-offer` | Delete a sale page (domain offer) from the account. The domain itself is not affected. | `DELETE /offers` | `offers:write` |
+| `list-offer-statistics` | List visitor and checkout figures (visitors, checkout steps, sales, abandoned checkouts) of every sale page over a period of 7, 30, 90 or 365 days or all time, plus the account total. | `GET /offers/statistics` | `offers:read` |
+| `get-offer-statistics` | Get the daily visitor and checkout figures and the referring sources of one sale page for a date range of up to 366 days, including today. | `GET /offers/statistics/daily` | `offers:read` |
 
 ### Leads
 
