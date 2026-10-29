@@ -88,7 +88,7 @@ server answers that API access has been disabled for your account, write to
 the API.
 
 **3. A personal access token.** Create one under
-[Settings → API](https://app.elitedomains.de/settings#api). You choose its scopes when
+[Settings → API](https://app.elitedomains.de/account/settings#api). You choose its scopes when
 you create it and cannot change them afterwards, so grant only what the agent should be
 able to do — see [Scopes](#scopes) below. The token is shown once.
 
@@ -138,7 +138,7 @@ Bridge the HTTP server into a local process with
 
 Your token is a password to a portfolio that costs real money to change. Keep it out of
 repositories and shared configuration files, and revoke it in
-[Settings → API](https://app.elitedomains.de/settings#api) the moment you suspect it
+[Settings → API](https://app.elitedomains.de/account/settings#api) the moment you suspect it
 leaked.
 
 ## Scopes
@@ -148,9 +148,9 @@ A token carries scopes of the form `<resource>:<access>`, for example `domains:r
 server only offers an agent the tools its token actually covers: authenticate with a
 read-only token and no tool that changes anything is even visible.
 
-Read and write are independent — `domains:write` does **not** imply `domains:read`.
-Two broader grants exist as well: `read` covers every read scope and `write` every
-write scope, including resources we add later.
+Write includes read — `domains:write` also covers `domains:read`. Two broader grants
+exist as well: `read` covers every read scope and `write` every scope at all, both
+including resources we add later.
 
 Calling a tool the token has no scope for fails with a message naming the missing
 scope, rather than doing half the work.
