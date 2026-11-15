@@ -7,14 +7,14 @@ answer buyers and read the invoices behind it all — from any AI agent that spe
 This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**. There is
 nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.de`,
 authenticate with a personal access token from your ELITEDOMAINS account, and the
-43 tools below appear.
+66 tools below appear.
 
 |  |  |
 | --- | --- |
 | **Endpoint** | `https://mcp.elitedomains.de` |
 | **Transport** | Streamable HTTP |
 | **Authentication** | OAuth 2.1 with Dynamic Client Registration, or a bearer token — the same personal access token as the REST API |
-| **Tools** | 43 |
+| **Tools** | 66 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
 | **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
@@ -205,6 +205,23 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `delete-offer` | Delete a sale page (domain offer) from the account. The domain itself is not affected. | `DELETE /offers` | `offers:write` |
 | `list-offer-statistics` | List visitor and checkout figures (visitors, checkout steps, sales, abandoned checkouts) of every sale page over a period of 7, 30, 90 or 365 days or all time, plus the account total. | `GET /offers/statistics` | `offers:read` |
 | `get-offer-statistics` | Get the daily visitor and checkout figures and the referring sources of one sale page for a date range of up to 366 days, including today. | `GET /offers/statistics/daily` | `offers:read` |
+| `list-portfolios` | List the account's portfolios (titled collections of sale pages with a public page), with type, publication, domain count and the filter of dynamic ones. List a portfolio's domains with list-offers and its portfolio argument. | `GET /portfolios` | `offers:read` |
+| `get-portfolio` | Get one portfolio with its publication settings and, for a dynamic one, its filter. | `GET /portfolios/{id}` | `offers:read` |
+| `create-portfolio` | Create a portfolio: static (add domains with add-portfolio-domains) or dynamic (holds what its filter matches). It starts private unless private is false. | `POST /portfolios` | `offers:write` |
+| `update-portfolio` | Change a portfolio's title, address, description, type, filter, publication (active, private, listed, statistics) or remove its image. Only the fields sent change. Switching to dynamic without a filter replaces assigned domains with all sale pages. | `PATCH /portfolios/{id}` | `offers:write` |
+| `delete-portfolio` | Delete a portfolio. Its sale pages stay; links to the portfolio stop working. | `DELETE /portfolios/{id}` | `offers:write` |
+| `add-portfolio-domains` | Add sale pages to a static portfolio by domain name; the answer counts what was skipped. | `POST /portfolios/{id}/domains` | `offers:write` |
+| `remove-portfolio-domains` | Remove sale pages from a static portfolio by domain name. The sale pages themselves stay. | `DELETE /portfolios/{id}/domains` | `offers:write` |
+| `list-bundles` | List the account's bundles (several internal sale pages sold together at one price), with their domain count and why a bundle cannot be bought. | `GET /bundles` | `offers:read` |
+| `get-bundle` | Get one bundle with every domain it holds and, per domain, why it keeps the bundle from being bought. | `GET /bundles/{id}` | `offers:read` |
+| `create-bundle` | Create an empty bundle from a name, a price and a mode; add its domains with add-bundle-domains. | `POST /bundles` | `offers:write` |
+| `update-bundle` | Change a bundle's name, description, price, mode, active flag or whether buyers may suggest a price. Only the fields sent change. | `PATCH /bundles/{id}` | `offers:write` |
+| `delete-bundle` | Delete a bundle. Its sale pages stay and are free again. | `DELETE /bundles/{id}` | `offers:write` |
+| `add-bundle-domains` | Add sale pages to a bundle by domain name. Only internal sale pages not in another bundle go in; the answer counts what was skipped. | `POST /bundles/{id}/domains` | `offers:write` |
+| `remove-bundle-domains` | Remove sale pages from a bundle by domain name. The sale pages themselves stay. | `DELETE /bundles/{id}/domains` | `offers:write` |
+| `list-offer-links` | List your offer links (links with your price for a sale page), optionally for one domain or status. | `GET /offer-links` | `offers:read` |
+| `create-offer-link` | Create an offer link: whoever opens it buys the domain at your price, also on sale pages without price suggestions. Nothing is sent. | `POST /offer-links` | `offers:write` |
+| `withdraw-offer-link` | Withdraw an offer link; it stops working at once. | `DELETE /offer-links/{id}` | `offers:write` |
 
 ### Leads
 
@@ -213,6 +230,10 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `list-leads` | List the leads (interested buyers) across the account's sale pages, with filtering by domain, ordering and pagination. | `GET /leads` | `leads:read` |
 | `send-counter-offer` | Send a counter-offer (new asking price) for a lead, or the seller's first price if the lead had none yet. | `POST /leads/{id}/counter-offer` | `leads:write` |
 | `accept-price-suggestion` | Accept a lead's pending buyer price suggestion. | `POST /leads/{id}/accept` | `leads:write` |
+| `get-lead-messages` | Read the course of a negotiation (lead): messages of buyer and seller, price suggestions, offers and events, oldest first. | `GET /leads/{id}/messages` | `leads:read` |
+| `send-lead-message` | Send a message to the buyer of a lead. Contact details are masked; the buyer gets one email for unread messages after five minutes. | `POST /leads/{id}/messages` | `leads:write` |
+| `archive-lead` | Archive a lead (end the negotiation). A pending buyer price suggestion is turned down by email. | `POST /leads/{id}/archive` | `leads:write` |
+| `withdraw-counter-offer` | Withdraw your open counter-offer to a lead. Its checkout link stops working and the buyer is told. | `POST /leads/{id}/withdraw-offer` | `leads:write` |
 
 ### Notes
 
@@ -252,6 +273,13 @@ two rate limits (see [Rate limits](#rate-limits)).
 | `catcher-info` | Get backorder (catcher) information for a specific domain name. | `GET /backorder/catcher/info` | `catcher:read` |
 | `create-catcher-order` ⚡ | Place a backorder (catcher) for a .de domain so it is caught when it drops. Only .de domains are supported. | `POST /backorder/catcher` | `catcher:write` |
 | `delete-catcher-order` | Remove a backorder (catcher) order for a domain. | `DELETE /backorder/catcher` | `catcher:write` |
+
+### Playbooks
+
+| Tool | What it does | REST | Scope |
+| --- | --- | --- | --- |
+| `list-playbooks` | List the playbooks: step-by-step guides for common tasks (e.g. registering domains), with what to ask the customer and what to confirm before acting. Read one with get-playbook before starting such a task. | `—` | `—` |
+| `get-playbook` | Read a playbook by name (see list-playbooks): the steps for a common task, the questions to ask the customer and the confirmations to get before anything is charged or changed. Follow it. | `—` | `—` |
 
 ## Paid actions
 
