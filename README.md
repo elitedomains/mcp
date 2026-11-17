@@ -4,20 +4,20 @@ Register and transfer domains, backorder expiring domains, run sale pages,
 answer buyers and read the invoices behind it all — from any AI agent that speaks the
 [Model Context Protocol](https://modelcontextprotocol.io).
 
-This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.de)**. There is
-nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.de`,
+This is the official MCP server of **[ELITEDOMAINS](https://elitedomains.com)**. There is
+nothing to install, clone or run: point an MCP client at `https://mcp.elitedomains.com`,
 authenticate with a personal access token from your ELITEDOMAINS account, and the
 66 tools below appear.
 
 |  |  |
 | --- | --- |
-| **Endpoint** | `https://mcp.elitedomains.de` |
+| **Endpoint** | `https://mcp.elitedomains.com` (clients configured with `https://mcp.elitedomains.de` keep working) |
 | **Transport** | Streamable HTTP |
 | **Authentication** | OAuth 2.1 with Dynamic Client Registration, or a bearer token — the same personal access token as the REST API |
 | **Tools** | 66 |
 | **Server version** | 1.0.0 |
 | **Price** | free; you pay for the domains you buy, not for the interface |
-| **Operator** | [ELITEDOMAINS](https://elitedomains.de), Germany |
+| **Operator** | [ELITEDOMAINS](https://elitedomains.com), Germany |
 
 ## What we offer
 
@@ -37,7 +37,7 @@ app.
 
 ## Who we are
 
-[ELITEDOMAINS](https://elitedomains.de) is an independent, owner-operated German domain
+[ELITEDOMAINS](https://elitedomains.com) is an independent, owner-operated German domain
 provider. Two domainers founded it in 2017 and opened it to everyone in 2018, because the
 control panels they had to work with every day were built for people who own one domain,
 not a few thousand — and the motto has not changed since: by domainers for domainers.
@@ -45,15 +45,15 @@ not a few thousand — and the motto has not changed since: by domainers for dom
 We write every line of the platform ourselves and run our own registry connections,
 including a direct one to [DENIC](https://www.denic.de), the registry behind `.de`.
 That is where the deep `.de` features come from:
-[catching expiring `.de` domains](https://elitedomains.de/de-catcher), ordering an
-[AuthInfo2 code](https://elitedomains.de/auth-info-2-code), dispute alerts and a DENIC
+[catching expiring `.de` domains](https://elitedomains.com/de-catcher), ordering an
+[AuthInfo2 code](https://elitedomains.com/auth-info-2-code), dispute alerts and a DENIC
 monitor. On top of that sits the part of the business our customers earn money with:
-[selling domains](https://elitedomains.de/domains-verkaufen) through sale pages with an
+[selling domains](https://elitedomains.com/domains-verkaufen) through sale pages with an
 escrow-secured instant purchase, a marketplace, and Sedo synchronisation.
 
 The MCP server exposes that platform, tool for tool, to an agent working on your
 behalf. It is the same account, the same portfolio and the same prices you see when you
-log in — [see for yourself](https://elitedomains.de/preise).
+log in — [see for yourself](https://elitedomains.com/preise).
 
 ## What you can do with it
 
@@ -78,17 +78,17 @@ or monthly, if your account has a monthly `.de` runtime.
 
 ## Getting started
 
-**1. An ELITEDOMAINS account.** [Sign up](https://app.elitedomains.de/register) — free,
+**1. An ELITEDOMAINS account.** [Sign up](https://app.elitedomains.com/register) — free,
 and you only pay for what you register.
 
 **2. API access.** Included with every account, there is nothing to request. If the
 server answers that API access has been disabled for your account, write to
-[support](https://elitedomains.de/kontakt) or use the chat in the app. The
-[FAQ entry](https://elitedomains.de/faq/wie-funktioniert-api-schnittstelle) has more on
+[support](https://elitedomains.com/kontakt) or use the chat in the app. The
+[FAQ entry](https://elitedomains.com/faq/wie-funktioniert-api-schnittstelle) has more on
 the API.
 
 **3. A personal access token.** Create one under
-[Settings → API](https://app.elitedomains.de/account/settings#api). You choose its scopes when
+[Settings → API](https://app.elitedomains.com/account/settings#api). You choose its scopes when
 you create it and cannot change them afterwards, so grant only what the agent should be
 able to do — see [Scopes](#scopes) below. The token is shown once.
 
@@ -97,7 +97,7 @@ able to do — see [Scopes](#scopes) below. The token is shown once.
 ### Claude Code
 
 ```bash
-claude mcp add --transport http elitedomains https://mcp.elitedomains.de \
+claude mcp add --transport http elitedomains https://mcp.elitedomains.com \
   --header "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -108,7 +108,7 @@ claude mcp add --transport http elitedomains https://mcp.elitedomains.de \
   "mcpServers": {
     "elitedomains": {
       "type": "http",
-      "url": "https://mcp.elitedomains.de",
+      "url": "https://mcp.elitedomains.com",
       "headers": {
         "Authorization": "Bearer YOUR_TOKEN"
       }
@@ -128,7 +128,7 @@ Bridge the HTTP server into a local process with
     "elitedomains": {
       "command": "npx",
       "args": [
-        "-y", "mcp-remote", "https://mcp.elitedomains.de",
+        "-y", "mcp-remote", "https://mcp.elitedomains.com",
         "--header", "Authorization: Bearer YOUR_TOKEN"
       ]
     }
@@ -138,7 +138,7 @@ Bridge the HTTP server into a local process with
 
 Your token is a password to a portfolio that costs real money to change. Keep it out of
 repositories and shared configuration files, and revoke it in
-[Settings → API](https://app.elitedomains.de/account/settings#api) the moment you suspect it
+[Settings → API](https://app.elitedomains.com/account/settings#api) the moment you suspect it
 leaked.
 
 ## Scopes
@@ -158,7 +158,7 @@ scope, rather than doing half the work.
 ## Tools
 
 Every tool mirrors one REST endpoint of the
-[ELITEDOMAINS API](https://app.elitedomains.de/docs), which documents each parameter,
+[ELITEDOMAINS API](https://app.elitedomains.com/docs), which documents each parameter,
 each response field and each error. Arguments, validation and results are identical —
 whichever interface you use, you are talking to the same code.
 
@@ -337,31 +337,31 @@ The server acts strictly on the account the token belongs to and returns only th
 account's data. What an MCP client sends to a model, and what its operator does with
 it, is between you and that client — nothing about your portfolio leaves ELITEDOMAINS
 until an agent you configured asks for it. See our
-[privacy policy](https://elitedomains.de/datenschutz).
+[privacy policy](https://elitedomains.com/datenschutz).
 
 ## Support
 
-- **Questions about the server or the API** — [contact us](https://elitedomains.de/kontakt),
+- **Questions about the server or the API** — [contact us](https://elitedomains.com/kontakt),
   or use the chat in the app; we answer our support ourselves.
 - **Bugs and feature requests** — open an issue in this repository.
-- **API reference** — [app.elitedomains.de/docs](https://app.elitedomains.de/docs),
-  MCP section: [MCP Server (AI Agents)](https://app.elitedomains.de/docs#mcp-server-ai-agents).
+- **API reference** — [app.elitedomains.com/docs](https://app.elitedomains.com/docs),
+  MCP section: [MCP Server (AI Agents)](https://app.elitedomains.com/docs#mcp-server-ai-agents).
 
 ## ELITEDOMAINS
 
-[Home](https://elitedomains.de) ·
-[Prices](https://elitedomains.de/preise) ·
-[Marketplace](https://elitedomains.de/marktplatz) ·
-[Sell domains](https://elitedomains.de/domains-verkaufen) ·
-[Backorder](https://elitedomains.de/de-catcher) ·
-[AuthInfo2](https://elitedomains.de/auth-info-2-code) ·
-[FAQ](https://elitedomains.de/faq) ·
-[Changelog](https://elitedomains.de/changelog) ·
-[About us](https://elitedomains.de/about) ·
-[Contact](https://elitedomains.de/kontakt) ·
-[Imprint](https://elitedomains.de/impressum) ·
-[Privacy](https://elitedomains.de/datenschutz) ·
-[Terms](https://elitedomains.de/agb)
+[Home](https://elitedomains.com) ·
+[Prices](https://elitedomains.com/preise) ·
+[Marketplace](https://elitedomains.com/marktplatz) ·
+[Sell domains](https://elitedomains.com/domains-verkaufen) ·
+[Backorder](https://elitedomains.com/de-catcher) ·
+[AuthInfo2](https://elitedomains.com/auth-info-2-code) ·
+[FAQ](https://elitedomains.com/faq) ·
+[Changelog](https://elitedomains.com/changelog) ·
+[About us](https://elitedomains.com/about) ·
+[Contact](https://elitedomains.com/kontakt) ·
+[Imprint](https://elitedomains.com/impressum) ·
+[Privacy](https://elitedomains.com/datenschutz) ·
+[Terms](https://elitedomains.com/agb)
 
 ---
 
